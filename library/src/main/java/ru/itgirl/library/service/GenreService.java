@@ -1,4 +1,4 @@
-package ru.itgirl.library.model.service;
+package ru.itgirl.library.service;
 
 import ru.itgirl.library.model.dto.GenreDto;
 
