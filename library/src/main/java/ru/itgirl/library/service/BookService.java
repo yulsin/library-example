@@ -1,6 +1,6 @@
 package ru.itgirl.library.service;
 
-import ru.itgirl.library.model.dto.BookDto;
+import ru.itgirl.library.model.dto.*;
 
 public interface BookService {
     BookDto getBookById(Long id);
@@ -9,4 +9,10 @@ public interface BookService {
     BookDto getByNameV2(String name);
 
     BookDto getByNameV3(String name);
+
+    BookDto createBook(BookCreateDto bookCreateDto);
+
+    BookDto updateBook(BookUpdateDto bookUpdateDto);
+
+    void deleteBook(Long id);
 }

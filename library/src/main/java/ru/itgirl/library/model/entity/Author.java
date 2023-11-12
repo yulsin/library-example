@@ -1,10 +1,7 @@
 package ru.itgirl.library.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -19,10 +16,13 @@ public class Author {
     private Long id;
 
     @Column(nullable = false)
+    @Setter
     private String name;
 
     @Column(nullable = false)
+    @Setter
     private String surname;
+
 
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
