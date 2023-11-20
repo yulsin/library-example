@@ -1,10 +1,14 @@
 package ru.itgirl.library.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.itgirl.library.model.dto.*;
+import ru.itgirl.library.model.dto.BookCreateDto;
+import ru.itgirl.library.model.dto.BookDto;
+import ru.itgirl.library.model.dto.BookUpdateDto;
 import ru.itgirl.library.service.BookService;
 
+@Controller
 @RestController
 @RequiredArgsConstructor
 public class BookController {

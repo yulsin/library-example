@@ -21,6 +21,6 @@ public class Genre {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "genre")
+    @OneToMany(mappedBy = "genre")
     private Set<Book> books;
 }

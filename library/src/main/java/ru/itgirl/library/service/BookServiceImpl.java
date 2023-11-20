@@ -7,25 +7,25 @@ import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.itgirl.library.model.dto.*;
-import ru.itgirl.library.model.entity.Author;
+import ru.itgirl.library.model.dto.AuthorDto;
+import ru.itgirl.library.model.dto.BookCreateDto;
+import ru.itgirl.library.model.dto.BookDto;
+import ru.itgirl.library.model.dto.BookUpdateDto;
 import ru.itgirl.library.model.entity.Book;
 import ru.itgirl.library.model.entity.Genre;
 import ru.itgirl.library.repository.AuthorRepository;
 import ru.itgirl.library.repository.BookRepository;
+import ru.itgirl.library.repository.GenreRepository;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final GenreRepository genreRepository;
 
     @Override
     public BookDto getByNameV1(String name) {
@@ -93,9 +93,10 @@ public class BookServiceImpl implements BookService {
     }
 
     private Book convertDtoToEntity(BookCreateDto bookCreateDto) {
+        Genre genre = genreRepository.findGenreByName(bookCreateDto.getGenre()).orElseThrow();
         return Book.builder()
                 .name(bookCreateDto.getName())
-                .genre(bookCreateDto.getGenre())
+                .genre(genre)
                 .build();
     }
 
@@ -103,7 +104,8 @@ public class BookServiceImpl implements BookService {
     public BookDto updateBook(BookUpdateDto bookUpdateDto) {
         Book book = bookRepository.findById(bookUpdateDto.getId()).orElseThrow();
         book.setName(bookUpdateDto.getName());
-        book.setGenre(bookUpdateDto.getGenre());
+        Genre genre = genreRepository.findGenreByName(bookUpdateDto.getGenre()).orElseThrow();
+        book.setGenre(genre);
         Book savedBook = bookRepository.save(book);
         BookDto bookDto = convertToDto(savedBook);
         return bookDto;
@@ -112,5 +114,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 }

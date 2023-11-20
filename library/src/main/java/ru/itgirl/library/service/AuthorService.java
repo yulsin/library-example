@@ -5,6 +5,8 @@ import ru.itgirl.library.model.dto.AuthorDto;
 import ru.itgirl.library.model.dto.AuthorUpdateDto;
 import ru.itgirl.library.model.dto.BookDto;
 
+import java.util.List;
+
 public interface AuthorService {
     AuthorDto getAuthorById(Long id);
 
@@ -19,4 +21,6 @@ public interface AuthorService {
     AuthorDto updateAuthor(AuthorUpdateDto authorUpdateDto);
 
     void deleteAuthor(Long id);
+
+    List<AuthorDto> getAllAuthors();
 }

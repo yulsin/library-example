@@ -2,6 +2,8 @@ package ru.itgirl.library.service;
 
 import ru.itgirl.library.model.dto.*;
 
+import java.util.List;
+
 public interface BookService {
     BookDto getBookById(Long id);
     BookDto getByNameV1(String name);
@@ -15,4 +17,6 @@ public interface BookService {
     BookDto updateBook(BookUpdateDto bookUpdateDto);
 
     void deleteBook(Long id);
+
+    List<BookDto> getAllBooks();
 }
